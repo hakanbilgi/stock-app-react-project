@@ -6,13 +6,16 @@ import Typography from "@mui/material/Typography";
 import LockIcon from "@mui/icons-material/Lock";
 import image from "../assets/result.svg";
 import { Link, useNavigate } from "react-router-dom";
-
+import * as yup from 'yup';
 import { useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import { TextField } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 
-const loginSchema = {};
+const loginSchema = 
+  yup.object().shape({
+  email: yup.string().email("Please enter valid email").required(),
+  });
 
 const Login = () => {
   const navigate = useNavigate();
