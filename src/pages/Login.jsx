@@ -55,12 +55,20 @@ const Login = () => {
             onSubmit={(values, actions) => {
               //!login(values)
               actions.resetForm();
-              actions, setSubmitting(false);
+              actions.setSubmitting(false);
             }}>
-              
+
             {({ values, handleChange, handleBlur, isSubmitting }) => (
               <Form>
-
+                 <Box>
+                  <TextField
+                  label="Email"
+                  name="email"
+                  id="email"
+                  type="email"
+                  variant="outlined"
+                  />
+                </Box> 
 
               </Form>
             )}
