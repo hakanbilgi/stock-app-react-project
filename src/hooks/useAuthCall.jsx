@@ -1,21 +1,16 @@
-import { useDispatch } from "react-redux";
 import axios from "axios";
 import {
+  fetchFail,
   fetchStart,
   loginSuccess,
   logoutSuccess,
-  registerSuccess,
-  fetchFail,
 } from "../features/authSlice";
+import { useDispatch } from "react-redux";
 
-import { useNavigate } from "react-router-dom";
-import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
+const BASE_URL = "https://clarusway.pythonanywhere.com/";
 
-const useAuthCalls = () => {
+const useAuthCall = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const BASE_URL = "https://10001.fullstack.clarusway.com/";
 
   const login = async (userInfo) => {
     dispatch(fetchStart());
@@ -24,13 +19,10 @@ const useAuthCalls = () => {
         `${BASE_URL}account/auth/login/`,
         userInfo
       );
-
       dispatch(loginSuccess(data));
-      toastSuccessNotify("Login performed");
-      navigate("/stock");
-    } catch (err) {
+    } catch (error) {
+      console.log(error);
       dispatch(fetchFail());
-      toastErrorNotify("Login can not be performed");
     }
   };
 
@@ -39,35 +31,13 @@ const useAuthCalls = () => {
     try {
       await axios.post(`${BASE_URL}account/auth/logout/`);
       dispatch(logoutSuccess());
-      toastSuccessNotify("Logout performed");
-      navigate("/");
-    } catch (err) {
+    } catch (error) {
+      console.log(error);
       dispatch(fetchFail());
-      toastErrorNotify("Logout can not be performed");
     }
   };
 
-  const register = async (userInfo) => {
-    dispatch(fetchStart());
-    try {
-      const { data } = await axios.post(
-        `${BASE_URL}account/register/`,
-        userInfo
-      );
-      dispatch(registerSuccess(data));
-      toastSuccessNotify("Register performed");
-      navigate("/stock");
-    } catch (err) {
-      dispatch(fetchFail());
-      toastErrorNotify("Register can not be performed");
-    }
-  };
-
-  return {
-    login,
-    logout,
-    register,
-  };
+  return { login, logout };
 };
 
-export default useAuthCalls;
+export default useAuthCall;

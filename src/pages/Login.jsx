@@ -6,12 +6,15 @@ import Typography from "@mui/material/Typography";
 import LockIcon from "@mui/icons-material/Lock";
 import image from "../assets/result.svg";
 import { Link, useNavigate } from "react-router-dom";
+
 import { useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import { TextField } from "@mui/material";
-import { ErrorSharp, TouchAppRounded } from "@mui/icons-material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import * as yup from "yup";
+import useAuthCall from "../hooks/useAuthCall";
+import { useEffect } from "react";
+import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -32,6 +35,18 @@ const loginSchema = yup.object().shape({
 const Login = () => {
   const navigate = useNavigate();
   const { currentUser, error, loading } = useSelector((state) => state?.auth);
+  const { login } = useAuthCall();
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/stock");
+      toastSuccessNotify("Login Performed");
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    error && toastErrorNotify("Login can not e performed");
+  }, [error]);
 
   return (
     <Container maxWidth="lg">
@@ -42,7 +57,8 @@ const Login = () => {
         sx={{
           height: "100vh",
           p: 2,
-        }}>
+        }}
+      >
         <Grid item xs={12} mb={3}>
           <Typography variant="h3" color="primary" align="center">
             STOCK APP
@@ -56,14 +72,16 @@ const Login = () => {
               m: "auto",
               width: 40,
               height: 40,
-            }}>
+            }}
+          >
             <LockIcon size="30" />
           </Avatar>
           <Typography
             variant="h4"
             align="center"
             mb={4}
-            color="secondary.light">
+            color="secondary.light"
+          >
             Login
           </Typography>
 
@@ -71,10 +89,12 @@ const Login = () => {
             initialValues={{ email: "", password: "" }}
             validationSchema={loginSchema}
             onSubmit={(values, actions) => {
-              //! login(values);
+              login(values);
+              navigate("/stock");
               actions.resetForm();
               actions.setSubmitting(false);
-            }}>
+            }}
+          >
             {({
               values,
               isSubmitting,
@@ -91,19 +111,20 @@ const Login = () => {
                     id="email"
                     type="email"
                     variant="outlined"
-                    values={values.email}
+                    value={values.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={touched.email && Boolean(errors.email)}
                     helperText={touched.email && errors.email}
                   />
+
                   <TextField
                     label="Password"
                     name="password"
                     id="password"
                     type="password"
                     variant="outlined"
-                    values={values.password}
+                    value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={touched.password && Boolean(errors.password)}
@@ -113,7 +134,8 @@ const Login = () => {
                     type="submit"
                     loading={loading}
                     loadingPosition="center"
-                    variant="contained">
+                    variant="contained"
+                  >
                     Submit
                   </LoadingButton>
                 </Box>
