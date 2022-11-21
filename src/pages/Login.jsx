@@ -10,13 +10,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import { TextField } from "@mui/material";
-import { ErrorSharp } from "@mui/icons-material";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const loginSchema = {};
 
 const Login = () => {
   const navigate = useNavigate();
-  const { currentUser, error } = useSelector((state) => state?.auth);
+  const { currentUser, error,loading } = useSelector((state) => state?.auth);
 
   return (
     <Container maxWidth="lg">
@@ -59,28 +59,42 @@ const Login = () => {
               actions.resetForm();
               actions.setSubmitting(false);
             }}>
-
-            {({ values, handleChange, handleBlur, isSubmitting,touched,errors }) => (
+            {({
+              values,
+              handleChange,
+              handleBlur,
+              isSubmitting,
+              touched,
+              errors,
+            }) => (
               <Form>
-                 <Box sx={{display:"flex",flexDirection:"column",gap:2}}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                   <TextField
-                  label="Email"
-                  name="email"
-                  id="email"
-                  type="email"
-                  variant="outlined"
-                  value={values.email}
-                  onChange={handleChange}
-                  error={touched.email && Boolean(errors.email)}
-                  helperText={touched.email && errors.email}
-                  
-                  
+                    label="Email"
+                    name="email"
+                    id="email"
+                    type="email"
+                    variant="outlined"
+                    value={values.email}
+                    onChange={handleChange}
+                    error={touched.email && Boolean(errors.email)}
+                    helperText={touched.email && errors.email}
                   />
-                </Box> 
-
+                  <TextField
+                    label="Password"
+                    name="password"
+                    id="password"
+                    type="password"
+                    variant="outlined"
+                    value={values.password}
+                    onChange={handleChange}
+                    error={touched.password && Boolean(errors.password)}
+                    helperText={touched.password && errors.password}
+                  />
+                  <LoadingButton loading={loading}Submit</LoadingButton>
+                </Box>
               </Form>
             )}
-            
           </Formik>
 
           <Box sx={{ textAlign: "center", mt: 2 }}>
