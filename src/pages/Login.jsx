@@ -91,7 +91,13 @@ const Login = () => {
                     error={touched.password && Boolean(errors.password)}
                     helperText={touched.password && errors.password}
                   />
-                  <LoadingButton loading={loading}Submit</LoadingButton>
+                  <LoadingButton 
+                  loading={loading}
+                  loadingPosition="center"
+                  type="submit"
+                  variant="contained"
+                                    
+                  >Submit</LoadingButton>
                 </Box>
               </Form>
             )}
