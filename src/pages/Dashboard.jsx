@@ -8,17 +8,11 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 import { useSelector } from "react-redux";
-import useAuthCall from "../hooks/useAuthCall";
-import { toastErrorNotify } from "../helper/ToastNotify";
-import { useEffect } from "react";
+import useAuthCalls from "../hooks/useAuthCalls";
 
 function Dashboard() {
-  const { currentUser, error } = useSelector((state) => state.auth);
-  const { logout } = useAuthCall();
-
-  useEffect(() => {
-    error && toastErrorNotify("logout can not be performed");
-  }, [error]);
+  const { currentUser } = useSelector((state) => state.auth);
+  const { logout } = useAuthCalls();
 
   return (
     <Box sx={{ display: "flex" }}>
