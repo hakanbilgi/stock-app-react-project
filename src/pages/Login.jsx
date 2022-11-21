@@ -71,6 +71,7 @@ const Login = () => {
             initialValues={{ email: "", password: "" }}
             validationSchema={loginSchema}
             onSubmit={(values, actions) => {
+              
               actions.resetForm();
               actions.setSubmitting(false);
             }}>
