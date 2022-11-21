@@ -71,7 +71,9 @@ const Login = () => {
                   variant="outlined"
                   value={values.email}
                   onChange={handleChange}
+                  error={touched.email && Boolean(errors.email)}
                   helperText={touched.email && errors.email}
+                  
                   
                   />
                 </Box> 
