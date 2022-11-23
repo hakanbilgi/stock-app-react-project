@@ -10,15 +10,15 @@ const Firms = () => {
 
   const getFirms = async () => {
     const url = "firms";
-    dispatch(fetchStart())
+    dispatch(fetchStart());
     try {
       const { data } = await axios.get(`${BASE_URL}stock/firms`, {
         headers: { Authorization: `Token ${token}` },
       });
       console.log(data);
-      dispatch(getSuccess({data,url}))
+      dispatch(getSuccess({ data, url }));
     } catch (error) {
-      dispatch(fetchFail())
+      dispatch(fetchFail());
       console.log(error);
     }
   };
