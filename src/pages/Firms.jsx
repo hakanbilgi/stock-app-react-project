@@ -1,4 +1,24 @@
+import { useEffect } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
+
 const Firms = () => {
+  const { token } = useSelector((state) => state.auth);
+  const BASE_URL = "https://14163.fullstack.clarusway.com/";
+  const getFirms = async () => {
+    try {
+      const { data } = await axios.get(`${BASE_URL}stock/firms`, {
+        headers: { Authorization: `Token` },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getFirms();
+  }, []);
+
   return <div>Firms</div>;
 };
 
