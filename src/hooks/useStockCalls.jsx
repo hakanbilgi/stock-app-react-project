@@ -34,7 +34,7 @@ const useStockCalls = () => {
   
   
 
-  return { getFirms };
+  return { getFirms,getSales };
 };
 
 export default useStockCalls;
