@@ -8,8 +8,8 @@ import useStockCalls from "../hooks/useStockCalls";
 
 const Firms = () => {
 
-  const {getFirms} = useStockCalls();
-  
+  const {getFirms,getSales} = useStockCalls();
+
   // const dispatch = useDispatch();
   // const { token } = useSelector((state) => state.auth);
   // const BASE_URL = "https://14163.fullstack.clarusway.com/";
@@ -31,6 +31,7 @@ const Firms = () => {
 
   useEffect(() => {
     getFirms();
+    getSales();
   }, []);
 
   return <div>Firms</div>;
