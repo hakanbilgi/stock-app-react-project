@@ -10,6 +10,7 @@ import { btnHoverStyle, flexCenter, flexColumn } from "../styles/globalStyle";
 import useStockCalls from "../hooks/useStockCalls";
 import { CardHeader } from "@mui/material";
 
+
 export default function FirmCard({ firm, setOpen, setInfo }) {
   const { deleteFirm } = useStockCalls();
   return (
